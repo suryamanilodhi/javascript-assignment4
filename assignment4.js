@@ -18,100 +18,41 @@ var productData = {
   price: 2599,
 };
 
-var main = document.createElement("div");
-document.body.append(main);
-main.className = "main_Section";
 
-var img_sec = document.createElement("img");
-img_sec.className = "bigimage";
-img_sec.id="big"
+document.getElementById("main_image").src = productData["preview"];
 
-var card_sec = document.createElement("div");
-card_sec.className = "card_box";
-main.append(img_sec, card_sec);
+document.getElementById("name").innerHTML = productData["name"];
 
-img_sec.src = productData.preview;
-var title = document.createElement("h2");
-title.innerHTML = productData.name; 
+document.getElementById("brand").innerHTML = productData["brand"];
 
+document.getElementById("price_value").innerHTML = productData["price"];
 
-var brand = document.createElement("h5");
-brand.innerHTML = "United Colors of Benetton";
-brand.className="paragraph"
-var price = document.createElement("h5");
+document.getElementById("description").innerHTML = productData["description"];
 
-price.innerHTML = "price : RS " +`<span>${productData.price}</span>`;
-price.className="paragraph"
+for(let i = 0; i < productData["photos"].length; i++)
+{
+    let temp_image_tag = document.createElement("img");
+    
+    temp_image_tag.id = "image_" + i;
+    temp_image_tag.setAttribute("onclick", "update_main_image(this);");
+    temp_image_tag.src = productData["photos"][i];
 
-var extra=document.createElement('h5'); 
-extra.innerHTML="Description"; 
-extra.className="paragraph";
+    if(i == 0) temp_image_tag.classList.add("active");
 
+    document.getElementById("preview_images").appendChild(temp_image_tag);
+}
 
-var des = document.createElement("p");
-des.innerHTML = productData.description;
-des.className="navy"
+console.clear();
 
-var preview = document.createElement("h5");
-preview.innerHTML = "Product Preview";
-preview.className="paragraph"
-var photo_Sec = document.createElement("div");
-photo_Sec.id="photo" 
+function update_main_image(new_image)
+{
+	console.log(new_image.src);
 
+	let main_image = document.getElementById("main_image");
 
-var btn=document.createElement('button');
-btn.innerHTML="Add to cart" 
-btn.className="first_button"
+	document.getElementById(main_image.dataset.img).classList.remove("active");
+	new_image.classList.add("active");
 
-card_sec.append(title, brand, price,extra,des, preview, photo_Sec,btn);
-for (var i = 0; i < productData.photos.length; i++) { 
-
-  var new_div = document.createElement("img");
-  new_div.src = productData.photos[i];
-  new_div.className = "small_img";
-  
-  new_div.setAttribute('id','start'+i)
-  
-  photo_Sec.append(new_div) 
-
-}  
-
-
-var image0=document.getElementById('start0');
-image0.addEventListener("click",function(){
- image0.style.border="2px solid green";
- image0.style.padding="3px"
- document.getElementById('big').src=this.src;
-})
-
-
- var image=document.getElementById('start1');
- image.addEventListener("click",function(){
-  image.style.border="2px solid green";
-  this.style.padding="3px"
-  document.getElementById('big').src=this.src;
-  
- })
-
-
- var image2=document.getElementById('start2');
- image2.addEventListener("click",function(){
-  image2.style.border="2px solid green";
-  image2.style.padding="3px"
-  document.getElementById('big').src=this.src;
- }) 
-
- var image3=document.getElementById('start3');
- image3.addEventListener("click",function(){
-  image3.style.border="2px solid green";
-  image3.style.padding="3px"
-  document.getElementById('big').src=this.src;
- })
-
- var image4=document.getElementById('start4');
- image4.addEventListener("click",function(){
-  image4.style.border="2px solid green";
-  image4.style.padding="3px"
-  document.getElementById('big').src=this.src;
- })
-
+	main_image.src = new_image.src;
+	main_image.dataset.img = new_image.id;
+}
